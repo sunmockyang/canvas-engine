@@ -5,7 +5,7 @@ function CEImage(url){
 	this.image.src = url;
 	this.width = 0;
 	this.height = 0;
-}
+};
 
 CEImage.prototype = new GVObject();
 

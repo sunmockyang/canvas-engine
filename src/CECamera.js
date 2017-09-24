@@ -13,7 +13,13 @@ function CECamera(context, getObjectList, defaultFollowObject) {
 	this.followObject = null;
 	this.followStrength = 0.05;
 
+	this.backgroundColor = null;
+
 	this.context.canvas.addEventListener('onresize', this.draw.bind(this));
+};
+
+CECamera.prototype.setBackgroundColor = function(backgroundColor) {
+	this.backgroundColor = backgroundColor;
 };
 
 CECamera.prototype.setDefaultFollowObject = function(defaultFollowObject) {
@@ -59,6 +65,14 @@ CECamera.prototype.convertCameraToWorldSpace = function(vec) {
 };
 
 CECamera.prototype.draw = function() {
+	if (this.backgroundColor != null) {
+		this.context.fillStyle = this.backgroundColor;
+		this.context.fillRect(0,0,this.context.canvas.width, this.context.canvas.height);
+	}
+	else {
+		this.context.clearRect(0,0,this.context.canvas.width, this.context.canvas.height);
+	}
+
 	if (this.followObject) {
 		this.center = Vector.Lerp(this.center, this.followObject.pos, this.followStrength);
 	}
