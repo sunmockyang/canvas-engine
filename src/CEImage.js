@@ -1,8 +1,9 @@
 class CEImage extends CEObject{
 	constructor(url) {
+		super();
 		this.readyToDraw = false;
 		this.image = new Image();
-		this.image.onload = (function() {this.readyToDraw = true; this.onload()}).bind(this);
+		this.image.onload = (function() {this.setSize(); this.readyToDraw = true; this.onload()}).bind(this);
 		this.image.src = url;
 		this.width = 0;
 		this.height = 0;
@@ -22,7 +23,11 @@ class CEImage extends CEObject{
 	// Will maintain aspect ratio if either width/height are missing
 	setSize(size) {
 		var imageSize = this.getSize()
-		if (size.width !== undefined && size.height !== undefined) {
+		if (size === undefined) { // Reset to original size
+			this.width = imageSize.width;
+			this.height = imageSize.height;
+		}
+		else if (size.width !== undefined && size.height !== undefined) {
 			this.width = size.width;
 			this.height = size.height;
 		}

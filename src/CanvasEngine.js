@@ -63,11 +63,13 @@ class CanvasEngine {
 	};
 
 	// Engine object functions
+	// Objects will be drawn in the same order as they are in the stack
+	// if addToTopOfDrawStack is set to true, add the object to the top of the stack
+	// if addToTopOfDrawStack is not set, it will by default be added to the bottom of the stack
 	addObject(obj, addToTopOfDrawStack) {
 		obj.setCamera(this);
 
-		// by default add items to the front
-		if (addToTopOfDrawStack !== true) {
+		if (addToTopOfDrawStack === true) {
 			this.ceObjectList.unshift(obj)
 		}
 		else {

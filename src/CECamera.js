@@ -10,6 +10,8 @@ class CECamera {
 		this.getObjectList = getObjectList;
 
 		this.center = new Vector();
+		this.rotation = 0;
+
 		this.defaultFollowObject = defaultFollowObject;
 		this.followObject = null;
 		this.followStrength = 0.05;
@@ -36,6 +38,10 @@ class CECamera {
 		}
 	};
 
+	getFollowObject() {
+		return this.followObject;
+	};
+
 	// Determines how closely it should follow the object to follow based on t.
 	// 1 being follow 1:1, 0 being follow 0:1. Value is used to lerp in every frame.
 	setFollowStrength(t) {
@@ -46,6 +52,10 @@ class CECamera {
 		this.center.x = vec.x;
 		this.center.y = vec.y;
 	};
+
+	setRotation(radians) {
+		this.rotation = radians;
+	}
 
 	getBounds() {
 		var width = this.context.canvas.width;
@@ -81,11 +91,16 @@ class CECamera {
 		var viewOrigin = this.center.sub(new Vector(this.context.canvas.width/2, this.context.canvas.height/2));
 
 		var drawObjects = this.getObjectList();
+		this.context.save();
+		this.context.translate(this.context.canvas.width/2, this.context.canvas.height/2);
+		this.context.rotate(- this.rotation);
+		this.context.translate(-this.context.canvas.width/2, -this.context.canvas.height/2);
 		for (var i = 0; i < drawObjects.length; i++) {
 			this.context.save();
 			this.context.translate(drawObjects[i].pos.x - viewOrigin.x, drawObjects[i].pos.y - viewOrigin.y)
 			drawObjects[i].draw();
 			this.context.restore();
 		};
+		this.context.restore();
 	};
 };
