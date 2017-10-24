@@ -92,6 +92,10 @@ Vector.prototype.equals = function(vec) {
 	return this.x == vec.x && this.y == vec.y;
 };
 
+Vector.prototype.toString = function() {
+	return "x: " + this.x + ", y: " + this.y;
+};
+
 Vector.Lerp = function(from, to, t) {
     return to.sub(from).multiply(t).add(from);
 };
@@ -104,6 +108,38 @@ var Mathx = {};
 
 Mathx.Lerp = function(from, to, t) {
     return (to - from) * t + from;
+};
+
+Mathx.LerpRotation = function(from, to, t) {
+	var result;
+    var diff = to - from;
+    if (diff < -Math.PI)
+    {
+        // lerp upwards past PI_TIMES_TWO
+        to += Math.PI * 2;
+        result = Mathx.Lerp(from, to, t);
+        if (result >= Math.PI * 2)
+        {
+            result -= Math.PI * 2;
+        }
+    }
+    else if (diff > Math.PI)
+    {
+        // lerp downwards past 0
+        to -= Math.PI * 2;
+        result = Mathx.Lerp(from, to, t);
+        if (result < 0)
+        {
+            result += Math.PI * 2;
+        }
+    }
+    else
+    {
+        // straight lerp
+        result = Mathx.Lerp(from, to, t);
+    }
+
+	return result;
 };
 
 Mathx.Deg2Rad = function(deg) {
