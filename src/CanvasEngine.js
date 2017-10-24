@@ -66,23 +66,22 @@ class CanvasEngine {
 	// Objects will be drawn in the same order as they are in the stack
 	// if addToTopOfDrawStack is set to true, add the object to the top of the stack
 	// if addToTopOfDrawStack is not set, it will by default be added to the bottom of the stack
-	addObject(obj, addToTopOfDrawStack) {
+	addObject(obj, index) {
+		index = !isNaN(index) ? index : this.ceObjectList.length;
 		obj.setCamera(this);
-
-		if (addToTopOfDrawStack === true) {
-			this.ceObjectList.unshift(obj)
-		}
-		else {
-			this.ceObjectList.push(obj);
-		}
+		this.ceObjectList.splice(index, 0, obj);
 	};
 
 	removeObject(obj) {
+		var removeList = [];
 		for (var i = 0; i < this.ceObjectList.length; i++) {
 			if (this.ceObjectList[i] == obj) {
-				this.ceObjectList.splice(i, 1);
+				removeList.push(i);
 				break;
 			}
+		};
+		for (var i = 0; i < removeList.length; i++) {
+			this.ceObjectList.splice(removeList, 1);
 		};
 	};
 
