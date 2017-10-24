@@ -57,7 +57,7 @@ class CanvasEngine {
 		}
 
 		for (var i = 0; i < objectsToDestroy.length; i++) {
-			this.objectsToDestroy[i].onDestroy();
+			objectsToDestroy[i].onDestroy();
 			this.removeObject(objectsToDestroy[i]);
 		}
 	};
