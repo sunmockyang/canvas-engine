@@ -64,8 +64,7 @@ class CanvasEngine {
 
 	// Engine object functions
 	// Objects will be drawn in the same order as they are in the stack
-	// if addToTopOfDrawStack is set to true, add the object to the top of the stack
-	// if addToTopOfDrawStack is not set, it will by default be added to the bottom of the stack
+	// if addToTopOfDrawStack is not set or isNaN, it will by default be added to the bottom of the stack (drawn last)
 	addObject(obj, index) {
 		index = !isNaN(index) ? index : this.ceObjectList.length;
 		obj.setCamera(this);

@@ -26,7 +26,7 @@ class DemoApp extends CanvasEngine{
 
 		// Create the image object, and add it to the top of the draw stack so it's drawn first
 		this.image = new CenteredImage("img.jpg");
-		this.addObject(this.image, true);
+		this.addObject(this.image, 0);
 	};
 
 	update() {
